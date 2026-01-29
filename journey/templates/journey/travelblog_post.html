@@ -44,7 +44,7 @@
         <div>
             <br>
             <p class="h4">Description</p>
-            <p>{{ post.description|safe }}</p>
+            <div class="rich-content">{{ post.description|safe }}</div>
         </div>
         {% with comments.count as total_comments %}
             <h5>
@@ -57,7 +57,7 @@
                     Comment {{ forloop.counter }} by {{ comment.name }}
                     {{ comment.created }}
                 </p>
-                {{ comment.body|safe }}
+                <div class="rich-content">{{ comment.body|safe }}</div>
             </div>
         {% empty %}
             <p>There are no comments yet.</p>
