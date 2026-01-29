@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+{% extends 'journey/base.html' %}
+{% block content %}
+    <style>
+        .django-ckeditor-widget {
+            width: 100%;
+        }
+
+        .django-ckeditor-widget .cke_contents {
+            height: 220px !important;
+        }
+    </style>
+
+    <div class="row justify-content-center py-4">
+        <div class="col-12 col-lg-8">
+            <div class="card shadow-sm">
+                <div class="card-body p-4">
+                    <h1 class="h4 mb-2">Create post</h1>
+                    <p class="text-muted mb-4">Share your journey with a title, image, and details.</p>
+
+                    <form method="POST" enctype="multipart/form-data" novalidate>
+                        {% csrf_token %}
+                        {{ form.media }}
+
+                        {{ form.as_p }}
+
+                        <div class="d-flex gap-2 mt-3">
+                            <button type="submit" class="btn btn-primary">Save</button>
+                            <a class="btn btn-outline-secondary" href="{% url 'journey:post_list' %}">Cancel</a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        (function () {
+            var inputs = document.querySelectorAll('form input, form select, form textarea');
+            inputs.forEach(function (el) {
+                if (el.type === 'checkbox' || el.type === 'radio' || el.type === 'hidden') return;
+                el.classList.add('form-control');
+            });
+        })();
+    </script>
+{% endblock %}
+</html>
