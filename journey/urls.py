@@ -3,6 +3,7 @@ from . import views
 from django.conf import settings
 from django.conf.urls.static import static
 from django.contrib.staticfiles.urls import staticfiles_urlpatterns
+from django.contrib.auth import views as auth_views
 
 app_name = 'journey'
 
@@ -18,6 +19,35 @@ urlpatterns = [
         path('comment/<int:pk>/edit/', views.comment_edit, name='comment_edit'),
         path('comment/<int:pk>/delete/', views.comment_delete, name='comment_delete'),
         path('travelblog_post/<int:post_id>',views.travelblog_post, name='travelblog_post'),
+        path(
+            'password-reset/',
+            auth_views.PasswordResetView.as_view(
+                template_name='registration/password_reset_form.html',
+                email_template_name='registration/password_reset_email.html',
+            ),
+            name='password_reset',
+        ),
+        path(
+            'password-reset/done/',
+            auth_views.PasswordResetDoneView.as_view(
+                template_name='registration/password_reset_done.html',
+            ),
+            name='password_reset_done',
+        ),
+        path(
+            'reset/<uidb64>/<token>/',
+            auth_views.PasswordResetConfirmView.as_view(
+                template_name='registration/password_reset_confirm.html',
+            ),
+            name='password_reset_confirm',
+        ),
+        path(
+            'reset/done/',
+            auth_views.PasswordResetCompleteView.as_view(
+                template_name='registration/password_reset_complete.html',
+            ),
+            name='password_reset_complete',
+        ),
 
 ]+ static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
 if settings.DEBUG:
